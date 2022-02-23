@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="button.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="output.css">
   </head>
-  <body class="w-1/2">
+  <body class="w-48 flex flex-col justify-center items-center bg-gray-50 h-full">
     <button id="changeColor">change</button>
-    <button id="script" class="bg-indigo-500 text-white text-3xl">script</button>
+    <input id="sidebar-color" class="sidebar-color" maxlength="6">
+    <button id="script" class="bg-indigo-500 text-white hover:bg-indigo-600 w-full">사이드바 색상 적용</button>
     <script src="popup.js"></script>
   </body>
 </html>

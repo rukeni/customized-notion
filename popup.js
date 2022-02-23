@@ -14,9 +14,11 @@ changeColor.addEventListener("click", async () => {
 
 script.addEventListener("click", async (event) => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const color = document.querySelector('.sidebar-color').value;
+  console.log('color', color);
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    function: setPageBackgroundColor2,
+    function: setPageBackgroundColor2(color),
   });
 })
 
@@ -28,7 +30,8 @@ function setPageBackgroundColor() {
   });
 }
 
-function setPageBackgroundColor2() {
+function setPageBackgroundColor2(color) {
     console.log('dd')
-    document.body.style.backgroundColor = 'red';
+
+   document.querySelector('.notion-sidebar').style.backgroundColor = '#' + color;
 }
