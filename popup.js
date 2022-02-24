@@ -1,7 +1,17 @@
 // Initialize button with user's preferred color
 let changeColor = document.getElementById("changeColor");
 let script = document.getElementById("script");
-
+const input = document.getElementById('sidebar-color');
+chrome.storage.sync.get(['color'], function(result) {
+  if(result.color) {
+    input.textContent = result.color;
+  }
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    function: setPageBackgroundColor2,
+    args: [result.color]
+  });
+});
 // When the button is clicked, inject setPageBackgroundColor into current page
 changeColor.addEventListener("click", async () => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -18,7 +28,8 @@ script.addEventListener("click", async (event) => {
   console.log('color', color);
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    function: setPageBackgroundColor2(color),
+    function: setPageBackgroundColor2,
+    args: [color]
   });
 })
 
@@ -31,7 +42,15 @@ function setPageBackgroundColor() {
 }
 
 function setPageBackgroundColor2(color) {
-    console.log('dd')
+  chrome.storage.sync.set({'color': color}, function() {
+    console.log('Value is set to ' + color);
+  });
+  chrome.storage.sync.get(['color'], function(result) {
+    console.log('Value currently is ' + JSON.stringify(result));
+    
+    document.querySelector('.notion-sidebar').style.backgroundColor = '#' + result.color;
+    document.querySelector('.notion-sidebar').style.color = '#fff' 
 
-   document.querySelector('.notion-sidebar').style.backgroundColor = '#' + color;
+    document.querySelector('.notion-sidebar').style.fontFamily = 'd2coding';
+  });
 }
