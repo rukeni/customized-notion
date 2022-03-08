@@ -1,3 +1,4 @@
+import { Client } from "@notionhq/client";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
@@ -13,7 +14,6 @@ const Popup = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       setCurrentURL(tabs[0].url);
     });
-    document.body.style.background = 'red';
   }, []);
 
   const changeBackground = () => {
@@ -31,7 +31,31 @@ const Popup = () => {
         );
       }
     });
+    chrome.bookmarks.getTree(data => {
+      console.log('data', data)
+    })
   };
+
+  const handleNotion = async () => {
+    // chrome.tabs.create({ url: "https://notion.so" });
+    // change notion sidebar color
+    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const notion = new Client({
+      auth: 'secret_RrM6VGLjZE2K9kXfbWqtcxRQyVhoutGlZhAQNui7nxL',
+    });
+
+    const alertFn = () => {
+      console.log('alertFn')
+      document.body.style.background = 'orange';
+    }
+
+    await chrome.scripting?.executeScript({
+      target: {tabId : tab.id},
+      func: alertFn
+    }, () => {
+      document.body.style.background = 'blue';
+    })
+  }
 
   return (
     <>
@@ -46,6 +70,7 @@ const Popup = () => {
         count up
       </button>
       <button onClick={changeBackground}>change background</button>
+      <button onClick={handleNotion}>커스텀 노션</button>
     </>
   );
 };

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/rukeni/customized-notion#readme",
   "dependencies": {
+    "@notionhq/client": "^1.0.2",
     "preact": "10.6.6"
   },
   "devDependencies": {
