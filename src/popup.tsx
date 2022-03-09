@@ -70,7 +70,7 @@ const Popup = () => {
         count up
       </button>
       <button onClick={changeBackground}>change background</button>
-      <button onClick={handleNotion}>커스텀 노션</button>
+      <button className='btn' onClick={handleNotion}>커스텀 노션</button>
     </>
   );
 };

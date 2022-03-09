@@ -29,6 +29,11 @@ module.exports = {
                 use: "ts-loader",
                 exclude: /node_modules/,
             },
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader", "postcss-loader"],
+                exclude: /node_modules/,
+            },
         ],
     },
     resolve: {
@@ -40,7 +45,7 @@ module.exports = {
     },
     plugins: [
         new CopyPlugin({
-            patterns: [{ from: ".", to: "../", context: "public" }],
+            patterns: [{ from: ".", to: "../", context: "public" }, { from: ".", to: "../", context: "styles" }],
             options: {},
         }),
     ],

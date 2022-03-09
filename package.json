@@ -4,7 +4,10 @@
   "description": "",
   "main": "background.js",
   "scripts": {
-    "build": "webpack --config webpack/webpack.prod.js"
+    "build": "webpack --config webpack/webpack.prod.js",
+    "clear": "rm -rf dist .cache",
+    "watch": "npm run clear && mkdir dist && cp -R static dist/static && cp manifest.json dist/ && parcel watch src/{records.html,options.html,background.js} -t node --bundle-node-modules -d dist/src --public-url ./",
+    "parcel:build": "npm run clear && parcel build src/{records.html,options.html,background.js} -d dist/src/ --public-url ./ && cp -R public dist/public && cp manifest.json dist/"
   },
   "repository": {
     "type": "git",
@@ -19,6 +22,7 @@
   "homepage": "https://github.com/rukeni/customized-notion#readme",
   "dependencies": {
     "@notionhq/client": "^1.0.2",
+    "daisyui": "^2.6.3",
     "preact": "10.6.6"
   },
   "devDependencies": {
@@ -26,16 +30,29 @@
     "@types/jest": "^27.0.2",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "autoprefixer": "^10.4.2",
     "copy-webpack-plugin": "^10.2.4",
+    "css-loader": "^6.7.1",
     "glob": "^7.1.6",
     "jest": "^27.2.1",
+    "parcel": "^2.3.2",
+    "parcel-plugin-static-files-copy": "^2.6.0",
+    "postcss": "^8.4.8",
+    "postcss-import": "^14.0.2",
+    "postcss-loader": "^6.2.1",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2 ",
+    "style-loader": "^3.3.1",
     "ts-jest": "^27.0.5",
     "ts-loader": "^8.0.0",
     "typescript": "4.6.2",
     "webpack": "5.70.0",
     "webpack-cli": "^4.9.2",
     "webpack-merge": "^5.0.0"
+  },
+  "alias": {
+    "react": "preact/compat",
+    "react-dom/test-utils": "preact/test-utils",
+    "react-dom": "preact/compat"
   }
 }
