@@ -1,4 +1,4 @@
-const purgecss = require('@fullhuman/postcss-purgecss')
+const purgecss = require('@fullhuman/postcss-purgecss');
 
 module.exports = {
   plugins: {
@@ -6,5 +6,5 @@ module.exports = {
     tailwindcss: {},
     autoprefixer: {},
     cssnano: {},
-  }
-}
+  },
+};

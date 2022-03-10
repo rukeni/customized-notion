@@ -4,7 +4,7 @@
   "description": "",
   "main": "background.js",
   "scripts": {
-    "build": "webpack --config webpack/webpack.prod.js",
+    "build": "npm run build:css && webpack --config webpack/webpack.prod.js",
     "build:css": "postcss styles/tailwind.css -o public/output.css",
     "clear": "rm -rf dist .cache",
     "watch": "npm run clear && mkdir dist && cp -R static dist/static && cp manifest.json dist/ && parcel watch src/{records.html,options.html,background.js} -t node --bundle-node-modules -d dist/src --public-url ./",
@@ -36,6 +36,7 @@
     "autoprefixer": "^10.4.2",
     "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.7.1",
+    "eslint": "^8.10.0",
     "glob": "^7.1.6",
     "jest": "^27.2.1",
     "parcel": "^2.3.2",
