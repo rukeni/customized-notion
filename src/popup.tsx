@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 const Popup = () => {
   const [count, setCount] = useState(0);
   const [checkedBackground, setCheckedBackground] = useState(false);
+  const [sidebarBackground, setSidebarBackground] = useState('#fff')
   const [currentURL, setCurrentURL] = useState<string>();
 
   useEffect(() => {
@@ -87,10 +88,14 @@ const Popup = () => {
             <label className="label">
               <span className="label-text">사이드바 배경색상</span>
             </label>
-            <input type="color" placeholder="사이드바 색상입력" className="input input-bordered w-full max-w-xs" />
+            <input type="text" placeholder="사이드바 색상입력" className="input input-bordered w-full max-w-xs" value={sidebarBackground} onChange={event => {
+              if(event.target.value.indexOf('#') === -1) {
+                return setSidebarBackground('#' + event.target.value)
+              }
+              return setSidebarBackground(event.target.value)
+            }} />
+            <input type="color" placeholder="사이드바 색상입력" className="input input-bordered w-full max-w-xs" value={sidebarBackground} onChange={event => setSidebarBackground(event.target.value)} />
             <label className="label">
-              <span className="label-text-alt">Alt label</span>
-              <span className="label-text-alt">Alt label</span>
             </label>
           </div>
           )}
