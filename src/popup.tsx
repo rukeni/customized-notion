@@ -62,22 +62,25 @@ const Popup = () => {
     );
   };
 
+  const handleClick = async () => {
+    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    console.log('tab', tab);
+    const changeSidebarColor = () => {
+      console.log('document.querySelector<HTMLElement>', document.querySelector<HTMLElement>('.notion-sidebar-container'))
+      document.querySelector<HTMLElement>('.notion-sidebar-container').style.background = sidebarBackground;
+    }
+    await chrome.scripting?.executeScript(
+      {
+        target: { tabId: tab.id },
+        func: changeSidebarColor,
+      },() => {
+        document.body.style.background = 'blue';
+      },
+    );
+  }
+
   return (
     <>
-      <ul style={{ minWidth: '700px' }}>
-        <li>Current URL: {currentURL}</li>
-        <li>Current Time: {new Date().toLocaleTimeString()}</li>
-      </ul>
-      <button
-        onClick={() => setCount(count + 1)}
-        style={{ marginRight: '5px' }}
-      >
-        count up
-      </button>
-      <button onClick={changeBackground}>change background</button>
-      <button className='btn' onClick={handleNotion}>
-        커스텀 노션
-      </button>
       <div className='form-control w-[500px]'>
         <label className='label cursor-pointer'>
           <span className='label-text'>배경색 변경</span>
@@ -88,15 +91,19 @@ const Popup = () => {
             <label className="label">
               <span className="label-text">사이드바 배경색상</span>
             </label>
-            <input type="text" placeholder="사이드바 색상입력" className="input input-bordered w-full max-w-xs" value={sidebarBackground} onChange={event => {
+            <input type="text" placeholder="사이드바 색상입력" className="input input-bordered w-full max-w-xs" value={sidebarBackground} onChange={async (event) => {
+              
               if(event.target.value.indexOf('#') === -1) {
                 return setSidebarBackground('#' + event.target.value)
               }
-              return setSidebarBackground(event.target.value)
+              return await setSidebarBackground(event.target.value)
             }} />
             <input type="color" placeholder="사이드바 색상입력" className="input input-bordered w-full max-w-xs" value={sidebarBackground} onChange={event => setSidebarBackground(event.target.value)} />
             <label className="label">
             </label>
+            <button className='btn btn-primary' onClick={handleClick}>적용</button>
+            <button className='btn btn-primary' onClick={handleNotion}>적용2</button>
+
           </div>
           )}
       </div>
